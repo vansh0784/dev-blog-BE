@@ -4,36 +4,36 @@ import { ROLE } from 'src/entities/user.entity';
 
 @InputType()
 export class SignupInput {
-  @Field()
-  userName: string;
+    @Field()
+    userName: string;
 
-  @Field()
-  password: string;
+    @Field()
+    password: string;
 
-  @Field()
-  email: string;
+    @Field()
+    email: string;
 
-  @Field({ defaultValue: ROLE.user })
-  role: string;
+    @Field({ defaultValue: ROLE.user })
+    role: string;
 }
 
 @InputType()
 export class SignInInput {
-  @Field()
-  email: string;
+    @Field()
+    email: string;
 
-  @Field()
-  password: string;
+    @Field()
+    password: string;
 }
 
 @InputType()
 export class UpdateUserInput {
-  @Field()
-  userName: string;
+    @Field()
+    userName: string;
 
-  @Field()
-  password: string;
+    @Field()
+    password: string;
 
-  @Field()
-  email: string;
+    @Field()
+    email: string;
 }

@@ -4,29 +4,29 @@ import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class UserService {
-  constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-  ) {}
+export class UserDbService {
+    constructor(
+        @InjectRepository(User)
+        private readonly userRepository: Repository<User>,
+    ) {}
 
-  async create(data: Partial<User>): Promise<User> {
-    const user = this.userRepository.create(data);
-    return this.userRepository.save(user);
-  }
+    async create(data: Partial<User>): Promise<User> {
+        const user = this.userRepository.create(data);
+        return this.userRepository.save(user);
+    }
 
-  async findByEmail(email: string): Promise<User | null> {
-    return await this.userRepository.findOne({ where: { email } });
-  }
+    async findByEmail(email: string): Promise<User | null> {
+        return await this.userRepository.findOne({ where: { email } });
+    }
 
-  async findById(id: string): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { id } });
-    if (!user) throw new NotFoundException('User not present');
-    return user;
-  }
+    async findById(id: string): Promise<User> {
+        const user = await this.userRepository.findOne({ where: { id } });
+        if (!user) throw new NotFoundException('User not present');
+        return user;
+    }
 
-  async update(id: string, data: Partial<User>): Promise<User> {
-    await this.userRepository.update(id, data);
-    return this.findById(id);
-  }
+    async update(id: string, data: Partial<User>): Promise<User> {
+        await this.userRepository.update(id, data);
+        return this.findById(id);
+    }
 }

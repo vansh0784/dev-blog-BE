@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
+import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './module/auth/auth.module';
@@ -7,15 +7,21 @@ import { CommentModule } from './module/comment/comment.module';
 import { ArticleModule } from './module/article/article.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfig } from './config/database.config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 @Module({
-  imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
-    TypeOrmModule.forRootAsync({ useClass: DatabaseConfig }),
-    AuthModule,
-    CommentModule,
-    ArticleModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+    imports: [
+        ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
+        TypeOrmModule.forRootAsync({ useClass: DatabaseConfig }),
+        AuthModule,
+        CommentModule,
+        ArticleModule,
+        GraphQLModule.forRoot<ApolloDriverConfig>({
+            driver: ApolloDriver,
+            autoSchemaFile: true,
+            path: '/graphql',
+        }),
+    ],
+    providers: [AppService, AppResolver],
 })
 export class AppModule {}

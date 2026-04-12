@@ -13,7 +13,7 @@ export class ArticleResolver {
         return this.articleService.createArticle(input, ctx?.req?.user?.userId);
     }
 
-    @Mutation(() => UpdateArticleInput)
+    @Mutation(() => ArticleType)
     updateArticle(@Args('input') input: UpdateArticleInput, @Context() ctx) {
         return this.articleService.updateArticle(input, ctx?.req?.user?.userId);
     }

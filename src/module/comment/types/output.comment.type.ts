@@ -1,4 +1,24 @@
-import { ObjectType } from '@nestjs/graphql';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { BaseEntity, Entity } from 'typeorm';
 
 @ObjectType()
-export class CommentObject {}
+@Entity()
+export class CommentEntity extends BaseEntity {
+    @Field(() => ID)
+    id: string;
+
+    @Field()
+    articleId: string;
+
+    @Field()
+    userId: string;
+
+    @Field()
+    content: string;
+
+    @Field()
+    createdAt: Date;
+
+    @Field()
+    updatedAt: Date;
+}

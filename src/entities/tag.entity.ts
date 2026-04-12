@@ -4,10 +4,10 @@ import { Article } from './article.entity';
 
 @Entity()
 export class Tag extends BaseEntity {
-    @Column()
+    @Column({ unique: true })
     name: string;
 
-    @Column()
+    @Column({ nullable: true, unique: true })
     slug: string;
 
     @ManyToMany(() => Article, (article) => article.tags)

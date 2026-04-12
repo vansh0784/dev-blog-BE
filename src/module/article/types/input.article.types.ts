@@ -9,6 +9,9 @@ export class CreateArticleInput {
     @Field()
     slug: string;
 
+    @Field(() => [String])
+    tags: string[];
+
     @Field()
     shortDescription: string;
 
@@ -38,4 +41,13 @@ export class UpdateArticleInput extends PartialType(CreateArticleInput) {
 export class DeleteArticleInput {
     @Field(() => ID)
     id: string;
+}
+
+@InputType()
+export class PaginatedArticle {
+    @Field()
+    limit: string;
+
+    @Field({ nullable: true })
+    cursor?: string;
 }

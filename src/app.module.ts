@@ -13,14 +13,14 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
     imports: [
         ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
         TypeOrmModule.forRootAsync({ useClass: DatabaseConfig }),
-        AuthModule,
-        CommentModule,
-        ArticleModule,
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
             autoSchemaFile: true,
             path: '/graphql',
         }),
+        AuthModule,
+        CommentModule,
+        ArticleModule,
     ],
     providers: [AppService, AppResolver],
 })

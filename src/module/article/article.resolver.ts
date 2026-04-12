@@ -1,6 +1,6 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ArticleService } from './article.service';
-import { CreateArticleInput, UpdateArticleInput } from './types/input.article.types';
+import { CreateArticleInput, PaginatedArticle, UpdateArticleInput } from './types/input.article.types';
 import { ArticleType } from './types/object.article.types';
 import { BaseResponse } from '../auth/types/auth.object.type';
 
@@ -29,7 +29,7 @@ export class ArticleResolver {
     }
 
     @Query(() => [ArticleType])
-    getArticles(@Args() id: string) {
-        return this.articleService.findArticleById(id);
+    getArticles(@Args('input') input: PaginatedArticle) {
+        return this.articleService.getArticles(input);
     }
 }

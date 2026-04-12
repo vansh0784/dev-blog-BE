@@ -1,32 +1,24 @@
 import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { Article } from './article.entity';
-
-export enum STATUS {
-    PENDING = 'PENDING',
-    APPROVED = 'APPROVED',
-    REJECTED = 'REJECTED',
-}
+import { User } from './user.entity';
 
 @Entity()
 export class Comment extends BaseEntity {
-    @ManyToOne(() => Article)
+    @Column()
+    articleId: string;
+
+    @ManyToOne(() => Article, (article) => article.comments, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'articleId' })
     article: Article;
 
     @Column()
-    name: string;
+    userId: string;
 
-    @Column({ nullable: true })
-    email: string;
+    @ManyToOne(() => User)
+    @JoinColumn({ name: 'userId' })
+    author: User;
 
     @Column({ type: 'text' })
     content: string;
-
-    @Column({
-        type: 'enum',
-        enum: STATUS,
-        default: STATUS.PENDING,
-    })
-    status: STATUS;
 }

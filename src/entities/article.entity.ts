@@ -1,7 +1,8 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { User } from './user.entity';
 import { Tag } from './tag.entity';
+import { Comment } from './comment.entity';
 
 export enum ARTICLE_STATUS {
     DRAFT = 'DRAFT',
@@ -38,8 +39,8 @@ export class Article extends BaseEntity {
     @Column({ default: 0 })
     likesCount: number;
 
-    @Column({ default: 0 })
-    commentsCount: number;
+    @OneToMany(() => Comment, (comment) => comment.article)
+    comments: Comment[];
 
     @Column({ nullable: true })
     readingTime: string;
@@ -55,6 +56,16 @@ export class Article extends BaseEntity {
     author: User;
 
     @ManyToMany(() => Tag, (tag) => tag.articles)
-    @JoinTable()
+    @JoinTable({
+        name: 'article_tags',
+        joinColumn: {
+            name: 'articleId',
+            referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
+            name: 'tagId',
+            referencedColumnName: 'id',
+        },
+    })
     tags: Tag[];
 }

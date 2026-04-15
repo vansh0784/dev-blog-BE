@@ -6,9 +6,11 @@ import { ArticleDbService } from 'src/common/db-service/article.db.service';
 import { Tag } from 'src/entities/tag.entity';
 import { TagDbService } from 'src/common/db-service/tag.db.service';
 import { ArticleResolver } from './article.resolver';
+import { CommentModule } from '../comment/comment.module';
+import { ArticleLikeModule } from '../like/like.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Article, Tag])],
+    imports: [TypeOrmModule.forFeature([Article, Tag]), CommentModule, ArticleLikeModule],
     providers: [ArticleService, ArticleDbService, TagDbService, ArticleResolver],
     exports: [ArticleService],
 })

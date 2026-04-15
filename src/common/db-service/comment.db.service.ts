@@ -24,4 +24,22 @@ export class CommentDbService {
     async findComment(id: string) {
         return this.commentDbService.findOne({ where: { id } });
     }
+
+    async getCommentsByArticleId(articleId: string, limit: number, cursor?: { createdAt: string; id: string }) {
+        const qb = this.commentDbService
+            .createQueryBuilder('comment')
+            .leftJoinAndSelect('comment.author', 'author')
+            .where('comment.articleId = :articleId', { articleId })
+            .orderBy('comment.createdAt', 'DESC')
+            .addOrderBy('comment.id', 'DESC')
+            .take(limit + 1);
+
+        if (cursor) {
+            qb.andWhere(`(comment.createdAt < :createdAt OR (comment.createdAt = :createdAt AND comment.id < :id))`, { createdAt: cursor.createdAt, id: cursor.id });
+        }
+        const [comments, _] = await qb.getManyAndCount();
+
+        const totalCount = await this.commentDbService.count({ where: { article: { id: articleId } } });
+        return { totalCount, comments };
+    }
 }

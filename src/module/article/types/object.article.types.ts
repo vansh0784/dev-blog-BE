@@ -1,6 +1,7 @@
 import { Field, ObjectType, ID, registerEnumType } from '@nestjs/graphql';
 import { ARTICLE_STATUS } from '../../../entities/article.entity';
 import { UserType } from '../../user/types/object.user.type';
+import { CommentType } from 'src/module/comment/types/output.comment.type';
 
 registerEnumType(ARTICLE_STATUS, {
     name: 'ArticleStatus',
@@ -55,4 +56,19 @@ export class ArticleType {
 
     @Field()
     updatedAt: Date;
+}
+
+@ObjectType()
+export class PaginatedCommentsType {
+    @Field(() => [CommentType])
+    items: CommentType[];
+
+    @Field(() => Number)
+    totalCount: number;
+
+    @Field(() => String, { nullable: true })
+    nextCursor?: string;
+
+    @Field(() => Boolean)
+    hasNextPage: boolean;
 }

@@ -10,6 +10,7 @@ import { DatabaseConfig } from './config/database.config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UserModule } from './module/user/user.module';
+import { CommonModule } from './common/common.module';
 @Module({
     imports: [
         ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
@@ -19,6 +20,7 @@ import { UserModule } from './module/user/user.module';
             autoSchemaFile: true,
             path: '/graphql',
         }),
+        CommonModule,
         AuthModule,
         CommentModule,
         ArticleModule,

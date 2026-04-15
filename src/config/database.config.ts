@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { Article } from 'src/entities/article.entity';
+import { ArticleLike } from 'src/entities/article.like.entity';
 import { Comment } from 'src/entities/comment.entity';
 import { Tag } from 'src/entities/tag.entity';
 import { User } from 'src/entities/user.entity';
@@ -20,7 +21,7 @@ export class DatabaseConfig implements TypeOrmOptionsFactory {
             synchronize: this.configService.get<boolean>('DB_SYNC'),
             logging: this.configService.get<boolean>('DB_LOGGING'),
             autoLoadEntities: true,
-            entities: [User, Article, Comment, Tag],
+            entities: [User, Article, Comment, Tag, ArticleLike],
             migrationsRun: false,
         };
     }

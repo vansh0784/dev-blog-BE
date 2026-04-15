@@ -1,7 +1,7 @@
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { CommentService } from './comment.service';
-import { CommentEntity } from './types/output.comment.type';
+import { CommentType } from './types/output.comment.type';
 import { CreateComment, UpdateComment } from './types/input.comment.type';
 import { BaseResponse } from '../auth/types/auth.object.type';
 import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
@@ -12,13 +12,13 @@ export class CommentResolver {
     constructor(private readonly commentService: CommentService) {}
 
     @UseGuards(GqlAuthGuard)
-    @Mutation(() => CommentEntity)
+    @Mutation(() => CommentType)
     async createComment(@Args('data') data: CreateComment, @Context() ctx): Promise<Comment> {
         return this.commentService.createComment(data, ctx?.req?.user?.id);
     }
 
     @UseGuards(GqlAuthGuard)
-    @Mutation(() => CommentEntity)
+    @Mutation(() => CommentType)
     async updateComment(@Args('data') data: UpdateComment, @Context() ctx): Promise<Comment> {
         return this.commentService.updateComment(data, ctx?.req?.user?.id);
     }

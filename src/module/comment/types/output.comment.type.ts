@@ -1,9 +1,8 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { BaseEntity, Entity } from 'typeorm';
+import { UserType } from 'src/module/user/types/object.user.type';
 
 @ObjectType()
-@Entity()
-export class CommentEntity extends BaseEntity {
+export class CommentType {
     @Field(() => ID)
     id: string;
 
@@ -12,6 +11,9 @@ export class CommentEntity extends BaseEntity {
 
     @Field()
     userId: string;
+
+    @Field(() => UserType)
+    author: UserType;
 
     @Field()
     content: string;

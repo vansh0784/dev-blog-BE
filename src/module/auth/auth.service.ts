@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserDbService } from 'src/common/services/user.db.service';
+import { UserDbService } from 'src/common/db-service/user.db.service';
 import { SignInInput, SignupInput, UpdateUserInput } from './types/auth.input.type';
 import { AuthResponse, UserType } from './types/auth.object.type';
 import { hash, compare } from 'bcrypt';
@@ -21,9 +21,7 @@ export class AuthService {
         const existingUser = await this.userDbService.findByEmail(data.email.toLowerCase());
 
         if (existingUser) throw new BadRequestException('User already exists!');
-
         const hashedPassword = await hash(data.password, 10);
-
         const user = await this.userDbService.create({
             email: data.email.toLowerCase(),
             password: hashedPassword,
@@ -46,28 +44,5 @@ export class AuthService {
 
         await this.userDbService.update(existingUser.id, { lastLoginAt: new Date() });
         return { token, user: existingUser };
-    }
-
-    async updateProfile(data: UpdateUserInput, userPayload: any): Promise<UserType> {
-        const userId = userPayload.userId;
-
-        const updateData: any = {};
-        if (data.email) {
-            updateData.email = data.email.toLowerCase();
-        }
-        if (data.userName) {
-            updateData.userName = data.userName;
-        }
-        if (data.password) {
-            updateData.password = await hash(data.password, 10);
-        }
-        return this.userDbService.update(userId, updateData);
-    }
-
-    async getProfile(userId: string) {
-        if (!userId) {
-            throw new NotFoundException('User id not found');
-        }
-        return this.userDbService.findById(userId);
     }
 }

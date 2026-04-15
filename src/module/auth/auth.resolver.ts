@@ -19,18 +19,6 @@ export class AuthResolver {
         return this.authService.login(input);
     }
 
-    @Mutation(() => UserType)
-    @UseGuards(GqlAuthGuard)
-    updateProfile(@Args('input') input: UpdateUserInput, @Context() ctx) {
-        return this.authService.updateProfile(input, ctx);
-    }
-
-    @Query(() => UserProfile)
-    @UseGuards(GqlAuthGuard)
-    getProfile(@Context() ctx) {
-        return this.authService.getProfile(ctx?.req?.user?.userId);
-    }
-
     @Mutation(() => BaseResponse)
     logout() {
         return { message: 'Logged out successfully!' };

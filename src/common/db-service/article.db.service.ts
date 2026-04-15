@@ -32,7 +32,7 @@ export class ArticleDbService {
         return (result.affected ?? 0) > 0;
     }
 
-    async getPaginatedArticle(limit: number, cursor?: { createdAt: string; slug: string }) {
+    async getPaginatedArticle(limit: number, cursor?: { createdAt: string; slug: string }, authorId?: string) {
         const qb = this.articleRepository
             .createQueryBuilder('article')
             .orderBy('article.createdAt', 'DESC')
@@ -42,7 +42,9 @@ export class ArticleDbService {
         if (cursor) {
             qb.andWhere(`(article.createdAt < :createdAt OR (article.createdAt = :createdAt AND article.slug < :slug))`, { createdAt: cursor.createdAt, slug: cursor.slug });
         }
-
+        if (authorId) {
+            qb.andWhere('article.authorId = :authorId', { authorId });
+        }
         const result = await qb.getMany();
 
         const hasNextPage = result.length > limit;

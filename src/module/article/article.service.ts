@@ -1,10 +1,10 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'crypto';
-import { ArticleDbService } from 'src/common/services/article.db.service';
+import { ArticleDbService } from 'src/common/db-service/article.db.service';
 import { CreateArticleInput, PaginatedArticle, UpdateArticleInput } from './types/input.article.types';
 import { Article } from 'src/entities/article.entity';
 import { BaseResponse } from '../auth/types/auth.object.type';
-import { TagDbService } from 'src/common/services/tag.db.service';
+import { TagDbService } from 'src/common/db-service/tag.db.service';
 import { Tag } from 'src/entities/tag.entity';
 
 @Injectable()
@@ -85,10 +85,10 @@ export class ArticleService {
     }
 
     async getArticles(data: PaginatedArticle) {
-        const { limit, cursor } = data;
+        const { limit, cursor, authorId } = data;
         let decodedCursor: { createdAt: string; slug: string } | null = null;
         if (cursor) decodedCursor = this.decodeToken(cursor);
-        const result = await this.articleDbService.getPaginatedArticle(+limit, decodedCursor);
+        const result = await this.articleDbService.getPaginatedArticle(+limit, decodedCursor, authorId);
         const nextCursor = result.nextCursor ? this.encodeToken(result.nextCursor) : null;
         return { ...result, nextCursor };
     }

@@ -50,4 +50,7 @@ export class PaginatedArticle {
 
     @Field({ nullable: true })
     cursor?: string;
+
+    @Field({ nullable: true })
+    authorId?: string;
 }

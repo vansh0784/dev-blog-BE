@@ -1,5 +1,5 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { CommentDbService } from 'src/common/services/comment.db.service';
+import { CommentDbService } from 'src/common/db-service/comment.db.service';
 import { CreateComment, UpdateComment } from './types/input.comment.type';
 import { Comment } from 'src/entities/comment.entity';
 import { BaseResponse } from '../auth/types/auth.object.type';

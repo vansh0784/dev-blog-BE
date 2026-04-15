@@ -13,7 +13,7 @@ export class SignupInput {
     @Field()
     email: string;
 
-    @Field({ defaultValue: ROLE.user })
+    @Field({ defaultValue: ROLE.USER })
     role: string;
 }
 

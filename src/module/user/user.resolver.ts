@@ -25,7 +25,7 @@ export class UserResolver {
         return this.userService.getProfile(ctx?.req?.user?.userId);
     }
 
-    @ResolveField(() => [ArticleType])
+    @Query(() => [ArticleType])
     async articles(@Parent() user: UserProfile) {
         const result = await this.articleService.getArticles({ limit: '10', authorId: user.id });
         return result.data;

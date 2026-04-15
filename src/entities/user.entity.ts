@@ -2,8 +2,8 @@ import { Column, Entity } from 'typeorm';
 import { BaseEntity } from './base.entity';
 
 export enum ROLE {
-    user = 'USER',
-    admin = 'ADMIN',
+    USER = 'USER',
+    ADMIN = 'ADMIN',
 }
 
 @Entity()
@@ -17,7 +17,7 @@ export class User extends BaseEntity {
     @Column()
     password: string;
 
-    @Column({ enum: ROLE, default: ROLE.user })
+    @Column({ enum: ROLE, default: ROLE.USER })
     role: ROLE;
 
     @Column({ default: false })

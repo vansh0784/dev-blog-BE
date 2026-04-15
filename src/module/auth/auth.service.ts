@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserDbService } from 'src/common/db-service/user.db.service';
-import { SignInInput, SignupInput, UpdateUserInput } from './types/auth.input.type';
-import { AuthResponse, UserType } from './types/auth.object.type';
+import { SignInInput, SignupInput } from './types/auth.input.type';
+import { AuthResponse } from './types/auth.object.type';
 import { hash, compare } from 'bcrypt';
 import { ROLE } from 'src/entities/user.entity';
 
@@ -26,7 +26,7 @@ export class AuthService {
             email: data.email.toLowerCase(),
             password: hashedPassword,
             userName: data.userName,
-            role: ROLE.user,
+            role: ROLE.USER,
             isActive: true,
         });
 

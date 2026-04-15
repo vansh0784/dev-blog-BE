@@ -1,6 +1,6 @@
 import { Field, ObjectType, ID, registerEnumType } from '@nestjs/graphql';
 import { ARTICLE_STATUS } from '../../../entities/article.entity';
-import { UserType } from '../../auth/types/auth.object.type';
+import { UserType } from '../../user/types/object.user.type';
 
 registerEnumType(ARTICLE_STATUS, {
     name: 'ArticleStatus',

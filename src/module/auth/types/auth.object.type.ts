@@ -1,17 +1,6 @@
 // Object Type is something that server returns to the client'
 import { ObjectType, Field } from '@nestjs/graphql';
-
-@ObjectType()
-export class UserType {
-    @Field()
-    userName: string;
-
-    @Field()
-    email: string;
-
-    @Field()
-    role: string;
-}
+import { UserType } from 'src/module/user/types/object.user.type';
 
 @ObjectType()
 export class AuthResponse {
